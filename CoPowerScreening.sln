@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoPowerScreening", "CoPowerScreening\CoPowerScreening.csproj", "{2B1CB577-DD85-4AE7-A2C6-252427FF0E37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xUnitTesting", "xUnitTesting\xUnitTesting.csproj", "{CAC6EFFE-24EF-428C-82E2-893438D57B00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2B1CB577-DD85-4AE7-A2C6-252427FF0E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B1CB577-DD85-4AE7-A2C6-252427FF0E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B1CB577-DD85-4AE7-A2C6-252427FF0E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAC6EFFE-24EF-428C-82E2-893438D57B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC6EFFE-24EF-428C-82E2-893438D57B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC6EFFE-24EF-428C-82E2-893438D57B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC6EFFE-24EF-428C-82E2-893438D57B00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
