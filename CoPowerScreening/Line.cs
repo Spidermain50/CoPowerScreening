@@ -3,46 +3,39 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Collections.Concurrent;
 
 namespace CoPowerScreening
 {
     public class Line
     {
-        private List<Unit> _units;
+        private FixedSizedQueue<int> _position;
 
         public Line()
         {
-            _units = new List<Unit>();
+            LastMarkedPosition = new FixedSizedQueue<int>();
+            LastMarkedPosition.Limit = 1;
         }
-
         
-        public List<Unit> Units
-        {
-            get
-            {
-                _units = _units.OrderBy(u => u.Value).ToList();
-                return _units;
-            }
-            set
-            {
-                _units = value;
-            }
-        }
+        public FixedSizedQueue<int> LastMarkedPosition { get; private set; }
     }
 
-    public class Unit
+    public class FixedSizedQueue<T>
     {
-        public Unit(int value)
-        {
-            Value = value;            
-        }
-        public void MarkUnit()
-        {
-            IsMarked = true;
-        }
-            
-        public int Value { get; set; }
-        public bool IsMarked { get; set; }
-    }
+        ConcurrentQueue<T> q = new ConcurrentQueue<T>();
+        private object lockObject = new object();
 
+        public T Value { get => q.SingleOrDefault(); }
+
+        public int Limit { get; set; }
+        public void Enqueue(T obj)
+        {
+            q.Enqueue(obj);
+            lock (lockObject)
+            {
+                T overflow;
+                while (q.Count > Limit && q.TryDequeue(out overflow)) ;
+            }
+        }
+    }
 }
