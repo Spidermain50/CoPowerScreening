@@ -43,7 +43,7 @@ namespace CoPowerScreening
             Console.ReadLine();
         }
 
-        public Sim SimA { get; set; }
-        public Sim SimB { get; set; }
+        public Sim SimA { get; private set; }
+        public Sim SimB { get; private set; }
     }
 }
