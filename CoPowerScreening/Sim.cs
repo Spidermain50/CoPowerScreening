@@ -19,21 +19,19 @@ namespace CoPowerScreening
         {
             return CurrentPosition == Line.LastMarkedPosition.Value;
         }
-
         public void MarkPosition()
         {
             if (Line.LastMarkedPosition.Value == CurrentPosition)
                 return;
             Line.LastMarkedPosition.Enqueue(CurrentPosition);
         }
-
         public void MoveLeft()
         {
             if (Line.LastMarkedPosition.Value == CurrentPosition - 1)
                 return;
 
             CurrentPosition = CurrentPosition - 1;
-            Line.LastMarkedPosition.Enqueue(CurrentPosition);
+            MarkPosition();
         }
         public void MoveRight()
         {
@@ -41,17 +39,12 @@ namespace CoPowerScreening
                 return;
 
             CurrentPosition = CurrentPosition + 1;
-            Line.LastMarkedPosition.Enqueue(CurrentPosition);
+            MarkPosition();
         }
-
         public void Relax()
         {
             //Should probably print some form of status
         }
-
-        public Line Line { get; private set; }
-        public int CurrentPosition { get; private set; }
-
         private int GenerateRandomNumber()
         {
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
@@ -68,5 +61,7 @@ namespace CoPowerScreening
             return BitConverter.ToInt16(byteArray2, 0);
         }
 
+        public Line Line { get; private set; }
+        public int CurrentPosition { get; private set; }
     }
 }
