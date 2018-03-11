@@ -13,14 +13,16 @@ namespace CoPowerScreening
         }
 
         public void Collide()
-        {
+        {            
+            Console.WriteLine($"{nameof(SimA)}'s starting position is {SimA.CurrentPosition}");
+            Console.WriteLine($"{nameof(SimB)}'s starting position is {SimB.CurrentPosition}");
             do
             {
-                if (SimA.CurrentPosition % 1000 == 0)
+                if (SimA.CurrentPosition % 100 == 0)
                 {
                     Console.WriteLine($"{nameof(SimA)}'s position is {SimA.CurrentPosition}");
                 }
-                if (SimB.CurrentPosition % 1000 == 0)
+                if (SimB.CurrentPosition % 100 == 0)
                 {
                     Console.WriteLine($"{nameof(SimB)}'s position is {SimB.CurrentPosition}");
                 }
@@ -34,16 +36,13 @@ namespace CoPowerScreening
                     SimA.MoveLeft();
                     SimB.MoveRight();
                 }
-                else
-                {
-                    SimA.Relax();
-                    SimB.Relax();
-                }
 
             } while (SimA.CurrentPosition != SimB.CurrentPosition);
+            Console.WriteLine($"{nameof(SimA)}'s stopped at position {SimA.CurrentPosition}");
+            Console.WriteLine($"{nameof(SimB)}'s stopped at position {SimB.CurrentPosition}");
+            Console.ReadLine();
         }
 
-        private List<Action> MovementActions { get; set; }
         public Sim SimA { get; set; }
         public Sim SimB { get; set; }
     }

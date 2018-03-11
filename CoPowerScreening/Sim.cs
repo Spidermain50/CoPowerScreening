@@ -17,70 +17,31 @@ namespace CoPowerScreening
 
         public bool IsCurrentPositionMarked()
         {
-            return Line.Units[CurrentPosition].IsMarked;
+            return CurrentPosition == Line.LastMarkedPosition.Value;
         }
 
         public void MarkPosition()
         {
-            var unitToMark = Line.Units?.FirstOrDefault(u => u.Value == CurrentPosition);
-            if(unitToMark == null)
-            {
-                unitToMark = new Unit(CurrentPosition);
-            }
-            unitToMark.MarkUnit();
-            Line.Units.Add(unitToMark);
+            if (Line.LastMarkedPosition.Value == CurrentPosition)
+                return;
+            Line.LastMarkedPosition.Enqueue(CurrentPosition);
         }
 
         public void MoveLeft()
         {
-            var nextMarkedUnitToTheLeft = Line.Units.Last(u => u.Value < CurrentPosition);
-
-            if (nextMarkedUnitToTheLeft == null)
+            if (Line.LastMarkedPosition.Value == CurrentPosition - 1)
                 return;
 
-            //see if unit exists
-            var nextUnit = Line.Units.SingleOrDefault(u => u.Value == (CurrentPosition - 1));
-            if (nextUnit != null)
-            {
-                if (nextUnit.IsMarked)
-                {
-                    //another sim is here or has been here
-                    Relax();
-                    return;
-                }
-            }
-            else
-            {
-                CurrentPosition = CurrentPosition - 1;
-                nextUnit = new Unit(CurrentPosition);
-                nextUnit.MarkUnit();
-                Line.Units.Add(nextUnit);
-            }
+            CurrentPosition = CurrentPosition - 1;
+            Line.LastMarkedPosition.Enqueue(CurrentPosition);
         }
         public void MoveRight()
         {
-            var nextMarkedUnitToTheRight = Line.Units.First(u => u.Value > CurrentPosition);
-
-            if (nextMarkedUnitToTheRight == null)
+            if (Line.LastMarkedPosition.Value == CurrentPosition + 1)
                 return;
 
-            //see if unit exists
-            var nextUnit = Line.Units.SingleOrDefault(u => u.Value == (CurrentPosition + 1));
-            if (nextUnit != null)
-            {
-                if (nextUnit.IsMarked)
-                {
-                    //another sim is here or has been here
-                    return;
-                }
-            }
-            else
-            {
-                CurrentPosition = CurrentPosition + 1;
-                nextUnit = new Unit(CurrentPosition);
-                nextUnit.MarkUnit();
-                Line.Units.Add(nextUnit);
-            }
+            CurrentPosition = CurrentPosition + 1;
+            Line.LastMarkedPosition.Enqueue(CurrentPosition);
         }
 
         public void Relax()
